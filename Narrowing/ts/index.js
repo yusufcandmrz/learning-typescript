@@ -107,3 +107,32 @@ console.log(x);
 function isFish(pet) {
     return pet.swim !== undefined;
 }
+let animal;
+let randomValue = Math.random();
+animal = randomValue < 0.5 ? { swim: () => console.log("The fish is swimming") } : { fly: () => console.log("The bird is flying") };
+console.log(`animal is fish? ${isFish(animal)}`);
+let randomValue2;
+let animal2;
+const zoo = [];
+for (let index = 0; index < 3; index++) {
+    randomValue2 = Math.random();
+    animal2 = randomValue2 < 0.5 ? { swim: () => console.log("The fish is swimming") } : { fly: () => console.log("The bird is flying") };
+    zoo.push(animal2);
+}
+const underWater = zoo.filter(isFish);
+console.log(`total fishes in the zoo -> ${underWater.length}`);
+console.log("********************");
+function getArea(shape) {
+    switch (shape.kind) {
+        case "circle":
+            return Math.PI * shape.radius ** 2;
+        case "square":
+            return shape.sideLenght ** 2;
+        case "triangle":
+            return (1 / 2) * shape.sideLenght * shape.height;
+        default:
+            const _exhaustiveCheck = shape;
+            return _exhaustiveCheck;
+    }
+}
+console.log(getArea({ kind: "circle", radius: 12 }));

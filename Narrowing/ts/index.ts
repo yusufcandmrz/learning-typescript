@@ -129,3 +129,57 @@ console.log(x);
 function isFish(pet: Fish | Bird): pet is Fish {
     return (pet as Fish).swim !== undefined;
 }
+
+let animal;
+let randomValue = Math.random();
+animal = randomValue < 0.5 ? { swim: () => console.log("The fish is swimming") } : { fly: () => console.log("The bird is flying") };
+console.log(`animal is fish? ${isFish(animal)}`);
+
+let randomValue2;
+let animal2;
+const zoo: (Fish | Bird)[] = [];
+for (let index = 0; index < 3; index++) {
+    randomValue2 = Math.random();
+    animal2 = randomValue2 < 0.5 ? { swim: () => console.log("The fish is swimming") } : { fly: () => console.log("The bird is flying") };
+    zoo.push(animal2);
+}
+const underWater: Fish[] = zoo.filter(isFish);
+console.log(`total fishes in the zoo -> ${underWater.length}`);
+
+console.log("********************")
+
+// Assertion functions
+
+interface Circle {
+    kind: "circle",
+    radius: number
+}
+
+interface Square {
+    kind: "square",
+    sideLenght: number
+}
+
+interface Triangle {
+    kind: "triangle",
+    sideLenght: number,
+    height: number
+}
+
+type Shape = Circle | Square | Triangle;
+
+function getArea(shape: Shape) {
+    switch (shape.kind) {
+        case "circle":
+            return Math.PI * shape.radius ** 2;
+        case "square":
+            return shape.sideLenght ** 2;
+        case "triangle":
+            return (1/2) * shape.sideLenght * shape.height;
+        default:
+            const _exhaustiveCheck: never = shape;
+            return _exhaustiveCheck;
+    }
+}
+
+console.log(getArea({ kind: "circle", radius: 12 }));
