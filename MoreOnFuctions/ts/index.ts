@@ -96,3 +96,163 @@ function greet<Str extends string>(s: Str) {
     console.log(`hello ${s}`)
 }
 
+console.log("*******************");
+
+// Optional Parameters
+
+function f(x?: number) {
+    if (x != null) {
+        console.log(x);
+    }
+}
+f();
+f(12);
+
+function f2(x: number = 10) {
+    if (x != null) {
+        console.log(x);
+    }
+}
+f2();
+f2(12);
+
+function myForEach(arr: any[], callback: (arg: any, index?: number) => void) {
+    for (let i = 0; i < arr.length; i++) {
+        callback(arr[i], i);
+    }
+}
+myForEach([1, 2, 3], (a) => { console.log(a) });
+myForEach([1, 2, 3], (a, i) => { console.log(a, i) })
+
+console.log("*******************");
+
+// Function Overloads
+
+function makeDate(timeStamp: number): Date;
+function makeDate(m: number, y: number, d: number): Date;
+function makeDate(mOrTimeStamp: number, y?: number, d?: number): Date {
+    return (y !== undefined && d !== undefined) ? new Date(y, mOrTimeStamp, d) : new Date(mOrTimeStamp)
+}
+const d1 = makeDate(123456789);
+console.log(d1);
+const d2 = makeDate(4, 8, 12);
+console.log(d2)
+// const d3 = makeDate(4, 8);
+
+function fn1(x: string): void;
+function fn1(x: string, y: string): void;
+function fn1() {
+    // ... 
+}
+// fn1()
+
+// function fn2(x: boolean): void;
+// function fn2(x: string): void;
+// function fn2(x: boolean) {
+//     ...
+// }
+
+// function fn2(x: boolean): boolean;
+// function fn2(x: string): string;
+// function fn2(x: boolean | string) {
+//     return true;
+// }
+
+function len(s: string): number;
+function len(arr: any[]): number;
+function len(arg: any): number {
+    return arg.length;
+}
+console.log(len("hello"));
+console.log(len([0]));
+// console.log(len(Math.random() > 0.5 ? "hello" : [0]));
+function len2(x: string | any[]): number {
+    return x.length;
+}
+
+const User = {
+    id: 123,
+    admin: false,
+    becomeAdmin: function () {
+        this.admin = true;
+    }
+}
+
+console.log("*******************");
+
+// Other Types to Know About
+
+function fn3() {
+    return;
+}
+
+function func1(x: any) {
+    x.b();
+}
+function func2(x: unknown) {
+    // x.b();
+}
+
+function safeParse(s: string): unknown {
+    return JSON.parse(s);
+}
+
+function fail(msg: string): never {
+    throw new Error(msg);
+}
+
+function fn4(x: string | number) {
+    if (typeof x == "string") {
+        // ...
+    } else if (typeof x == "boolean") {
+        // ...
+    } else {
+        console.log(typeof x);
+    }
+}
+
+function doSomething2(f: Function) {
+    return f(1, 2, 3);
+}
+
+console.log("*******************");
+
+// Rest Parameters and Arguments
+
+function multiply(n: number, ...m: number[]) {
+    return m.map((x) => x * n);
+}
+console.log(multiply(2, 1, 2, 3, 4, 5));
+
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+arr1.push(...arr2);
+console.log(arr1);
+
+const args = [1, 2] as const;
+const angle = Math.atan2(...args);
+console.log(angle);
+
+console.log("*******************");
+
+// Parameter Destructuring
+
+type ABC = { a: number, b: number, c: number }
+function sum({ a, b, c }: ABC) {
+    console.log(a + b + c);
+}
+sum({ a: 1, b: 2, c: 3 });
+
+console.log("*******************");
+
+// Assignability of Functions
+
+type voidFunc = () => void;
+const func3: voidFunc = () => {
+    return true;
+}
+console.log(func3());
+
+function func4(): void {
+    // return true;
+}
