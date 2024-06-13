@@ -170,3 +170,95 @@ type ColorfulCircle2 = Colorful & Circle;
 function draw(circle: Colorful & Circle) {
     console.log(`color was ${circle.color}, radius was ${circle.radius}`);
 }
+draw({ color: "red", radius: 12 });
+
+console.log("******************")
+
+// Generic Object Types
+
+interface Box {
+    contents: unknown;
+}
+let x: Box = {
+    contents: "hello"
+}
+// if (typeof x.contents === "string") {
+// console.log(x.contents.toUpperCase());
+// }
+console.log((x.contents as string).toUpperCase());
+
+interface Box2<Type> {
+    constents: Type
+}
+interface StringBox {
+    constents: string
+}
+let boxA: Box2<string> = { constents: "Hello" };
+let boxB: StringBox = { constents: "Hello" };
+console.log(`typeof boxA: ${typeof boxA.constents}, typeof boxB: ${typeof boxB.constents}`);
+
+function setContents<Type>(box: Box2<Type>, newContents: Type) {
+    box.constents = newContents;
+}
+setContents(boxA, "Hello World");
+console.log(boxA);
+
+function doSomething2(value: Array<string>) {
+    // ...
+}
+let myArray3: string[] = ["hello", "world"];
+doSomething2(myArray3);
+doSomething2(new Array("hello", "world"));
+
+function doStuff(values: ReadonlyArray<string>) {
+    // values.push("hello");
+}
+
+const roArray: ReadonlyArray<string> = ["red", "green", "blue"];
+
+let x2: readonly string[] = [];
+let y2: string[] = [];
+x2 = y2;
+// y2 = x2;
+
+function doSomething3(pair: [string, number]) {
+    const a = pair[0];
+    const b = pair[1];
+}
+doSomething3(["hello", 12]);
+
+function doSomething4(stringHash: [string, number]) {
+    const [firstItem, secondItem] = stringHash;
+    console.log(`first item is ${firstItem}, second item is ${secondItem}`);
+}
+doSomething4(["world", 24]);
+
+interface StringNumberPair {
+    length: 2,
+    0: string,
+    1: number,
+
+    slice(start?: number, end?: number): Array<string | number>;
+}
+
+type Either2dOr3d = [number, number, number?];
+
+function setCoordinate(coord: Either2dOr3d) {
+    const [x, y, z] = coord;
+    console.log(`provided coordinates had ${coord.length} dmensions`);
+}
+setCoordinate([12, 24, 36]);
+
+function readButtonInput(...args: [string, number, ...boolean[]]) {
+    const [name, version, ...input] = args;
+}
+
+function doSomething5(pair: readonly [string, number]) {
+    // pair[0] = "hello";
+}
+
+let point: [number, number] = [3, 4];
+function distanceFromOrigin([x, y]: [number, number]) {
+    return Math.sqrt(x ** 2 + y ** 2);
+}
+distanceFromOrigin(point);
